@@ -1,0 +1,30 @@
+{% extends 'catalogo/base_tienda.html' %}
+{% block titulo %}Carrito | PixelVault{% endblock %}
+{% block contenido %}
+<h1 class="h3 mb-4">Tu carrito</h1>
+{% if items %}
+<div class="panel">
+  {% for i in items %}
+  <div class="item d-flex align-items-center gap-3 py-3 border-bottom border-secondary">
+    {% if i.juego.imagen %}<img src="{{ i.juego.imagen }}" alt="">{% endif %}
+    <div class="flex-grow-1">
+      <div class="fw-bold">{{ i.juego.titulo }}</div>
+      <div class="text-secondary">{{ i.cantidad }} x ${{ i.juego.precio|floatformat:"0g" }}</div>
+    </div>
+    <div class="price">${{ i.subtotal|floatformat:"0g" }}</div>
+    <a href="{% url 'quitar' i.juego.pk %}" class="btn btn-sm btn-outline-danger">Quitar</a>
+  </div>
+  {% endfor %}
+  <div class="d-flex justify-content-between align-items-center mt-4">
+    <div class="h4 mb-0">Total: <span class="price">${{ total|floatformat:"0g" }}</span></div>
+    <div><a href="/" class="btn btn-outline-light">Seguir comprando</a>
+    <a href="{% url 'checkout' %}" class="btn btn-neon">Ir a pagar</a></div>
+  </div>
+</div>
+{% else %}
+<div class="panel text-center">
+  <p>Tu carrito está vacío.</p>
+  <a href="/" class="btn btn-neon">Ver juegos</a>
+</div>
+{% endif %}
+{% endblock %}

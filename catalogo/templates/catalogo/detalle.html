@@ -1,0 +1,24 @@
+{% extends 'catalogo/base_tienda.html' %}
+{% block titulo %}{{ v.titulo }} | PixelVault{% endblock %}
+{% block contenido %}
+<a href="/" class="text-secondary text-decoration-none">← Volver al catálogo</a>
+<div class="row g-4 mt-1">
+  <div class="col-md-7">
+    {% if v.imagen %}<img src="{{ v.imagen }}" alt="{{ v.titulo }}" class="w-100 rounded-3">{% else %}<div class="rounded-3" style="min-height:220px;background:linear-gradient(135deg,#7c5cff,#22d3ee)"></div>{% endif %}
+  </div>
+  <div class="col-md-5">
+    <div class="panel">
+      <span class="badge text-bg-secondary">{{ v.categoria }}</span>
+      <h1 class="h3 mt-2">{{ v.titulo }}</h1>
+      <p class="text-secondary">{{ v.descripcion }}</p>
+      <div class="price h2 mb-3">{% if v.precio == 0 %}GRATIS{% else %}${{ v.precio|floatformat:"0g" }}{% endif %}</div>
+      <a href="{% url 'agregar' v.pk %}" class="btn btn-neon btn-lg w-100">Agregar al carrito</a>
+      <p class="small text-secondary mt-3 mb-0">Entrega inmediata · Clave digital</p>
+    </div>
+  </div>
+</div>
+<h2 class="h5 mt-5">Más de {{ v.categoria }}</h2>
+<ul class="list-unstyled">
+  {% for r in relacionados %}<li><a class="text-info text-decoration-none" href="{% url 'detalle' r.pk %}">{{ r.titulo }}</a></li>{% endfor %}
+</ul>
+{% endblock %}

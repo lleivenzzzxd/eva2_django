@@ -1,0 +1,13 @@
+{% extends 'catalogo/base_tienda.html' %}
+{% block titulo %}Compra exitosa | PixelVault{% endblock %}
+{% block contenido %}
+<div class="panel text-center">
+  <h1 class="h3">✅ ¡Compra realizada!</h1>
+  <p>Pedido #{{ pedido.pk }} a nombre de {{ pedido.nombre }}. Te enviamos las claves a {{ pedido.email }}.</p>
+  {% for i in pedido.items.all %}
+  <div>{{ i.titulo }} x{{ i.cantidad }} (${{ i.precio|floatformat:"0g" }})</div>
+  {% endfor %}
+  <p class="h4 mt-3">Total pagado: <span class="price">${{ pedido.total|floatformat:"0g" }}</span></p>
+  <a href="/" class="btn btn-neon mt-2">Volver a la tienda</a>
+</div>
+{% endblock %}
